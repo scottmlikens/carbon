@@ -1,0 +1,16 @@
+# carbon - Carbon cache
+
+start on stopped rc RUNLEVEL=[2345]
+stop on runlevel [!2345]
+
+env VIRTUAL_ENV="/opt/graphite"
+env PATH="/opt/graphite/bin:/usr/local/bin"
+
+umask 022
+expect daemon
+respawn
+setuid graphite
+setgid graphite
+
+chdir /opt/graphite
+exec "/opt/graphite/bin/carbon-cache.py --instance=<%= @carbon_instance %> --config /opt/graphite/conf/carbon-cache-<%= @carbon_instance %>.conf start"

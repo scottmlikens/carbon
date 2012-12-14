@@ -1,0 +1,147 @@
+[cache]
+# Configure carbon directories.
+#
+# OS environment variables can be used to tell carbon where graphite is
+# installed, where to read configuration from and where to write data.
+#
+#   GRAPHITE_ROOT        - Root directory of the graphite installation.
+#                          Defaults to ../
+#   GRAPHITE_CONF_DIR    - Configuration directory (where this file lives).
+#                          Defaults to $GRAPHITE_ROOT/conf/
+#   GRAPHITE_STORAGE_DIR - Storage directory for whipser/rrd/log/pid files.
+#                          Defaults to $GRAPHITE_ROOT/storage/
+#
+# To change other directory paths, add settings to this file. The following
+# configuration variables are available with these default values:
+#
+#   STORAGE_DIR    = $GRAPHITE_STORAGE_DIR
+#   LOCAL_DATA_DIR = STORAGE_DIR/whisper/
+#   WHITELISTS_DIR = STORAGE_DIR/lists/
+#   CONF_DIR       = STORAGE_DIR/conf/
+#   LOG_DIR        = STORAGE_DIR/log/
+#   PID_DIR        = STORAGE_DIR/
+#
+# For FHS style directory structures, use:
+#
+#   STORAGE_DIR    = /var/lib/carbon/
+#   CONF_DIR       = /etc/carbon/
+#   LOG_DIR        = /var/log/carbon/
+#   PID_DIR        = /var/run/
+#
+LOCAL_DATA_DIR = <%= @local_data_dir %>
+
+# Specify the user to drop privileges to
+# If this is blank carbon runs as the user that invokes it
+# This user must have write access to the local data directory
+USER = <%= @user %>
+
+# Limit the size of the cache to avoid swapping or becoming CPU bound.
+# Sorts and serving cache queries gets more expensive as the cache grows.
+# Use the value "inf" (infinity) for an unlimited cache size.
+MAX_CACHE_SIZE = <%= @max_cache_size %>
+
+# Limits the number of whisper update_many() calls per second, which effectively
+# means the number of write requests sent to the disk. This is intended to
+# prevent over-utilizing the disk and thus starving the rest of the system.
+# When the rate of required updates exceeds this, then carbon's caching will
+# take effect and increase the overall throughput accordingly.
+MAX_UPDATES_PER_SECOND = <%= @max_updates_per_second %>
+
+# Softly limits the number of whisper files that get created each minute.
+# Setting this value low (like at 50) is a good way to ensure your graphite
+# system will not be adversely impacted when a bunch of new metrics are
+# sent to it. The trade off is that it will take much longer for those metrics'
+# database files to all get created and thus longer until the data becomes usable.
+# Setting this value high (like "inf" for infinity) will cause graphite to create
+# the files quickly but at the risk of slowing I/O down considerably for a while.
+MAX_CREATES_PER_MINUTE = <%= @max_creates_per_minute %>
+
+<% if @line_listner %>
+<% @line_listner.each_pair do |k,v| %>
+<%= k.upcase %> = <%= v %>
+<% end %>
+<% end %>
+
+<% if @udp_listner %>
+# Set this to True to enable the UDP listener. By default this is off
+# because it is very common to run multiple carbon daemons and managing
+# another (rarely used) port for every carbon instance is not fun.
+
+<% @udp_listner.each_pair do |k,v| %>
+<%= k.upcase %> = <%= v %>
+<% end %>
+<% end %>
+
+<% if @pickle_listner %>
+<% @pickle_listner.each_pair do |k,v| %>
+<%= k.upcase %> = <%= v %>
+<% end %>
+<% end %>
+
+# Per security concerns outlined in Bug #817247 the pickle receiver
+# will use a more secure and slightly less efficient unpickler.
+# Set this to True to revert to the old-fashioned insecure unpickler.
+USE_INSECURE_UNPICKLER = <%= @use_insecure_pickler %>
+
+<% if @cache_query %>
+<% @cache_query.each_pair do |k,v| %>
+<%= k.upcase %> = <%= v %>
+<% end %>
+<% end %>
+
+# Set this to False to drop datapoints received after the cache
+# reaches MAX_CACHE_SIZE. If this is True (the default) then sockets
+# over which metrics are received will temporarily stop accepting
+# data until the cache size falls below 95% MAX_CACHE_SIZE.
+USE_FLOW_CONTROL = <%= @use_flow_control %>
+
+# By default, carbon-cache will log every whisper update. This can be excessive and
+# degrade performance if logging on the same volume as the whisper data is stored.
+LOG_UPDATES = <%= @log_updates %>
+
+# On some systems it is desirable for whisper to write synchronously.
+# Set this option to True if you'd like to try this. Basically it will
+# shift the onus of buffering writes from the kernel into carbon's cache.
+WHISPER_AUTOFLUSH = <%= @whisper_autoflush %>
+
+<% if @enable_amqp %>
+<% if @enable_amqp == "True" %>
+# Enable AMQP if you want to receve metrics using an amqp broker
+ENABLE_AMQP = <%= @enable_amqp %>
+<% end %>
+
+# Verbose means a line will be logged for every metric received
+# useful for testing
+AMQP_VERBOSE = <%= @amqp_verbose %>
+
+<% if @amqp %>
+<% @amqp.each_pair do |k,v| %>
+<%= k.upcase %> = <%= v %>
+<% end %>
+<% end %>
+<% end %>
+
+# The manhole interface allows you to SSH into the carbon daemon
+# and get a python interpreter. BE CAREFUL WITH THIS! If you do
+# something like time.sleep() in the interpreter, the whole process
+# will sleep! This is *extremely* helpful in debugging, assuming
+# you are familiar with the code. If you are not, please don't
+# mess with this, you are asking for trouble :)
+#
+# ENABLE_MANHOLE = False
+# MANHOLE_INTERFACE = 127.0.0.1
+# MANHOLE_PORT = 7222
+# MANHOLE_USER = admin
+# MANHOLE_PUBLIC_KEY = ssh-rsa AAAAB3NzaC1yc2EAAAABiwAaAIEAoxN0sv/e4eZCPpi3N3KYvyzRaBaMeS2RsOQ/cDuKv11dlNzVeiyc3RFmCv5Rjwn/lQ79y0zyHxw67qLyhQ/kDzINc4cY41ivuQXm2tPmgvexdrBv5nsfEpjs3gLZfJnyvlcVyWK/lId8WUvEWSWHTzsbtmXAF2raJMdgLTbQ8wE=
+
+# Patterns for all of the metrics this machine will store. Read more at
+# http://en.wikipedia.org/wiki/Advanced_Message_Queuing_Protocol#Bindings
+#
+# Example: store all sales, linux servers, and utilization metrics
+# BIND_PATTERNS = sales.#, servers.linux.#, #.utilization
+#
+# Example: store everything
+# BIND_PATTERNS = #
+<% if @bind_patterns %>
+BIND_PATTERNS = <%= @bind_patterns %>
+<% end %>
