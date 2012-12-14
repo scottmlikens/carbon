@@ -89,7 +89,10 @@ action :install do
       group "root"
       mode 0644
       variables({
-                  :carbon_instance => new_resource.carbon_instance
+                  :carbon_instance => new_resource.carbon_instance,
+                  :graphite_home => new_resource.graphite_home,
+                  :user => new_resource.user,
+                  :group => new_resource.group
                 })
     end
     service "carbon-cache-" + new_resource.carbon_instance do

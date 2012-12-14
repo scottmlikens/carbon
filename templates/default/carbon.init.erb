@@ -3,14 +3,13 @@
 start on stopped rc RUNLEVEL=[2345]
 stop on runlevel [!2345]
 
-env VIRTUAL_ENV="/opt/graphite"
-env PATH="/opt/graphite/bin:/usr/local/bin"
+env VIRTUAL_ENV="<%= @graphite_home %>
 
 umask 022
 expect daemon
 respawn
-setuid graphite
-setgid graphite
+setuid <%= @user %>
+setgid <%= @group %>
 
-chdir /opt/graphite
-exec "/opt/graphite/bin/carbon-cache.py --instance=<%= @carbon_instance %> --config /opt/graphite/conf/carbon-cache-<%= @carbon_instance %>.conf start"
+chdir <%= @graphite_home %>
+exec <%= @graphite_home %>/bin/python <%= @graphite_home %>/bin/carbon-cache.py --instance=<%= @carbon_instance %> --config <%= @graphite_home %>/conf/carbon-cache-<%= @carbon_instance %>.conf start"
