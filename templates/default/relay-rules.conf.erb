@@ -1,0 +1,8 @@
+<% @relay_rules.each_pair do |k,v| %>
+[<%= k.to_s %>]
+<% unless v["default"] == "false" %>
+default = <%= v["default"] %>
+<% end %>
+destinations =<% if v["destinations"].compact.size > 1 %> <% v["destinations"].each do |d| %> <%= d %>, <% end %> <% else %> <%= v["destinations"].first %> <% end %>
+continue = <%= v["continue"] %>
+<% end %>

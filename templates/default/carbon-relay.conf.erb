@@ -1,0 +1,19 @@
+[relay:<%= @relay_instance %>]
+<% if @line_listner %>
+<% @line_listner.each_pair do |k,v| %>
+<%= k.upcase %> = <%= v %>
+<% end %>
+<% end %>
+<% if @pickle_listner %>
+<% @pickle_listner.each_pair do |k,v| %>
+<%= k.upcase %> = <%= v %>
+<% end %>
+<% end %>
+RELAY_METHOD = <%= @relay_method %>
+
+REPLICATION_FACTOR = <%= @replication_factor %>
+
+DESTINATIONS = <% if @destinations.compact.size > 1 %> <% @destinations.each do |d| %> <%= d %>, <% end %> <% else %> <%= @destinations.first %> <% end %>
+MAX_DATAPOINTS_PER_MESSAGE = <%= @max_datapoints_per_message %>
+MAX_QUEUE_SIZE = <%= @max_queue_size %>
+USE_FLOW_CONTROL = <%= @use_flow_control %>

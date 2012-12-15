@@ -2,14 +2,12 @@ action :install do
   group new_resource.group do
     action :create
   end
-
   user new_resource.user do
     group new_resource.group
     shell "/bin/bash"
     home new_resource.graphite_home
     supports :manage_home => true
   end
-
   directory new_resource.graphite_home do
     owner new_resource.user
     group new_resource.group
@@ -17,13 +15,13 @@ action :install do
     recursive true
     action :create
   end
-
   python_virtualenv new_resource.graphite_home do
     interpreter new_resource.python_interpreter
     owner new_resource.user
     group new_resource.group
     action :create
   end
+  package "util-linux"
   carbon_pkgs = new_resource.carbon_packages.collect do |pkg,ver|
     python_pip pkg do
       version ver
@@ -31,14 +29,19 @@ action :install do
       action :install
     end
   end
-
+end
+action :config do
   directory new_resource.graphite_home + "/conf" do
-    action :create
     owner new_resource.user
     group new_resource.group
     action :create
   end
-
+  directory new_resource.graphite_home + "/storage/log" do
+    action :create
+    owner new_resource.user
+    group new_resource.group
+    recursive true
+  end
   template new_resource.graphite_home + "/conf/carbon-cache-" + new_resource.carbon_instance + ".conf" do
     source new_resource.carbon_template_source
     owner new_resource.user
@@ -65,7 +68,6 @@ action :install do
               :local_data_dir => new_resource.local_data_dir
               )
   end
-
   template new_resource.graphite_home + "/conf/storage-schemas.conf" do
     source new_resource.storage_template_source
     owner new_resource.user
@@ -75,13 +77,11 @@ action :install do
                 :schema => new_resource.storage_schema
               })
   end
+  # This is due to storage/log being created by root and not knowing how/why.
+  execute "chown -R #{new_resource.user}:#{new_resource.group} #{new_resource.graphite_home}" do
+    action :run
+  end
   case new_resource.init_style
-  when "runit"
-    #FIXME:
-    # runit_service "carbon_cache-" + new_resource.carbon_instance
-    # definition would look for carbon-cache-a, -b and so forth without patching, need to find a middleground
-    log "runit not implemented, failing"
-    fatal
   when "upstart"
     template "/etc/init/carbon-cache-" + new_resource.carbon_instance + ".conf" do
       source "carbon.init.erb"
@@ -92,12 +92,33 @@ action :install do
                   :carbon_instance => new_resource.carbon_instance,
                   :graphite_home => new_resource.graphite_home,
                   :user => new_resource.user,
-                  :group => new_resource.group
+                  :group => new_resource.group,
+                  :cpu_affinity => new_resource.cpu_affinity
                 })
     end
+  else
+    log "not implemented"
+    fatal
+  end
+end
+action :start do
+  case new_resource.init_style
+  when "upstart"
     service "carbon-cache-" + new_resource.carbon_instance do
       provider Chef::Provider::Service::Upstart
       action [:enable,:start]
     end
+  end
+end
+action :stop do
+  case new_resource.init_style
+  when "upstart"
+    service "carbon-cache-" + new_resource.carbon_instance do
+      provider Chef::Provider::Service::Upstart
+      action [:stop,:disable]
+    end
+  else
+    log "not supported"
+    fatal
   end
 end

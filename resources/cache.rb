@@ -1,9 +1,10 @@
-actions :enable, :disable, :install, :remove
+actions :install, :config, :start, :stop
 
 # No Dependency checking here, this obviously will not be true on distros that do not run 2.7
 attribute :python_interpreter, :kind_of => String, :default => "python2.7"
 attribute :carbon_template_source, :kind_of => String, :default => "carbon.conf.erb"
 attribute :storage_template_source, :kind_of => String, :default => "storage-schemas.conf.erb"
+attribute :cpu_affinity, :kind_of => String
 attribute :options, :kind_of => Hash
 attribute :user, :kind_of => String, :default => "graphite"
 attribute :group, :kind_of => String, :default => "graphite"
@@ -31,6 +32,6 @@ attribute :init_style, :kind_of => String, :default => "upstart"
 
 def initialize(*args)
   super
-  @action = :nothing
+  @action = :install
   @run_context.include_recipe ["build-essential","python","python::pip","python::virtualenv"]
 end

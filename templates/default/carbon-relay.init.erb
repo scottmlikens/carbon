@@ -1,0 +1,19 @@
+# carbon-relay - carbon realy
+
+start on stopped rc RUNLEVEL=[2345]
+stop on runlevel [!2345]
+
+env VIRTUAL_ENV="<%= @graphite_home %>"
+
+umask 022
+expect daemon
+respawn
+setuid <%= @user %>
+setgid <%= @group %>
+
+chdir <%= @graphite_home %>
+<% if @cpu_affinity %>
+exec /usr/bin/taskset -c <%= @cpu_affinity %> <%= @graphite_home %>/bin/carbon-relay.py --instance=<%= @relay_instance %> --config <%= @graphite_home %>/conf/carbon-relay-<%= @relay_instance %>.conf start
+<% else %>
+exec <%= @graphite_home %>/bin/python <%= @graphite_home %>/bin/carbon-relay.py --instance=<%= @relay_instance %> --config <%= @graphite_home %>/conf/carbon-relay-<%= @relay_instance %>.conf start
+<% end %>
