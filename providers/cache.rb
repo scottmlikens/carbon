@@ -29,6 +29,7 @@ action :install do
       action :install
     end
   end
+  new_resource.updated_by_last_action(true)
 end
 action :config do
   directory new_resource.graphite_home + "/conf" do
@@ -100,6 +101,7 @@ action :config do
     log "not implemented"
     fatal
   end
+  new_resource.updated_by_last_action(true)
 end
 action :start do
   case new_resource.init_style
@@ -109,6 +111,7 @@ action :start do
       action [:enable,:start]
     end
   end
+  new_resource.updated_by_last_action(true)
 end
 action :stop do
   case new_resource.init_style
@@ -121,4 +124,5 @@ action :stop do
     log "not supported"
     fatal
   end
+  new_resource.updated_by_last_action(true)
 end
