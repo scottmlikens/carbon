@@ -8,6 +8,7 @@
 
 ** Requirements:
    [[http://www.opscode.com/chef/][Chef 0.10.8+]]
+   Upstart
 
 ** Usage:
    TBD
