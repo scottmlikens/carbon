@@ -1,0 +1,12 @@
+#+STARTUP: showeverything :vlines t
+#+TITLE: Changelog
+#+AUTHOR: Scott M. Likens
+#+EMAIL: scott@likens.us
+
+This file is used to list changes made in each version of carbon.
+
+## 0.1.0:
+
+* Work in Progress version of carbon
+  + Added support for upstart
+  + Basic provider of carbon_relay and carbon_cache works

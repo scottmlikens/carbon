@@ -4,12 +4,12 @@
 #+EMAIL: scott@likens.us
 
 *** TODO Carbon-cache
-    - [-] We should be able to set the cpu affinity or (not) if desired.
+    - [X] We should be able to set the cpu affinity or (not) if desired.
     - [-] Systemd units would be nice
-    - [-] It should be easy to host 12 or more carbon-caches correctly on a single server.
+    - [X] It should be easy to host 12 or more carbon-caches correctly on a single server.
 
 *** TODO Carbon-relay
-    - [-] We should be able to set the cpu affinity
+    - [X] We should be able to set the cpu affinity
     - [-] Systemd units would be nice
-    - [-] It should be easy to host multiple carbon-relays
+    - [X] It should be easy to host multiple carbon-relays
     - [-] Automate having HAProxy in front of multiple carbon-relays
