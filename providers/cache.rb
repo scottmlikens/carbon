@@ -47,6 +47,7 @@ action :config do
     source new_resource.carbon_template_source
     owner new_resource.user
     group new_resource.group
+    cookbook new_resource.cookbook
     mode 0655
     variables(
               :options => new_resource.options,
@@ -70,6 +71,7 @@ action :config do
               )
   end
   template new_resource.graphite_home + "/conf/storage-schemas.conf" do
+    cookbook new_resource.cookbook
     source new_resource.storage_template_source
     owner new_resource.user
     group new_resource.group
@@ -85,6 +87,7 @@ action :config do
   case new_resource.init_style
   when "upstart"
     template "/etc/init/carbon-cache-" + new_resource.carbon_instance + ".conf" do
+      cookbook new_resource.cookbook
       source "carbon.init.erb"
       owner "root"
       group "root"

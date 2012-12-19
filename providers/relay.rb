@@ -10,6 +10,7 @@ action :config do
     source new_resource.relay_template_source
     owner new_resource.user
     group new_resource.group
+    cookbook new_resource.cookbook
     mode 0655
     variables(
               :options => new_resource.options,
@@ -32,6 +33,7 @@ action :config do
     source new_resource.relay_rules_template_source
     owner  new_resource.user
     group new_resource.group
+    cookbook new_resource.cookbook
     mode 0644
     variables({
                 :relay_rules => new_resource.relay_rules
@@ -46,6 +48,7 @@ action :config do
       source new_resource.relay_init_template
       owner "root"
       group "root"
+      cookbook new_resource.cookbook
       mode 0644
       variables({
                   :relay_instance => new_resource.relay_instance,

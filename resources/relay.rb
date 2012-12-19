@@ -1,5 +1,6 @@
 actions :config, :start, :stop, :disable
 
+attribute :cookbook, :kind_of => String, :default => "carbon"
 attribute :options, :kind_of => Hash
 attribute :relay_rules, :kind_of => Hash, :default => { "default" => { "default" => "true", "destinations" => ["127.0.0.1:2004"], "continue" => "false", "pattern" => String.new } }
 attribute :line_listner, :kind_of => Hash, :default => {"line_receiver_interface" => "0.0.0.0", "line_receiver_port" => 2013 }
