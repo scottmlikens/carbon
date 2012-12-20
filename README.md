@@ -122,13 +122,13 @@ This is the most basic example you are not limited by this example.
 
 * The cookbook named ``graphite_infra`` must depend on the *carbon* cookbook.
 
-```carbon_cache "my_carbon" do```  
-```  action [:install,:config,:start]```  
-```cpu_affinity "1"```  
-```end```  
-```carbon_relay "sample" do```  
-```action [:config,:start]```  
-```end```
+    carbon_cache "my_carbon" do
+      action [:install,:config,:start]  
+      cpu_affinity "1"  
+    end  
+    carbon_relay "sample" do  
+      action [:config,:start]    
+    end
 
 
 License and Author
