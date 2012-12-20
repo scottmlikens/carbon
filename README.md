@@ -121,10 +121,10 @@ This is the most basic example you are not limited by this example.
 ```COOKBOOK=graphite_infra rake new_cookbook```  
 
 * The cookbook named ``graphite_infra`` must depend on the *carbon* cookbook.
-
+    
     carbon\_cache "my\_carbon" do  
       action [:install,:config,:start]  
-      cpu_affinity "1"  
+    cpu_affinity "1"  
     end  
     
     carbon\_relay "sample" do  
