@@ -13,7 +13,7 @@ RELAY_METHOD = <%= @relay_method %>
 
 REPLICATION_FACTOR = <%= @replication_factor %>
 
-DESTINATIONS = <% if @destinations.compact.size > 1 %> <% @destinations.each do |d| %> <%= d %>, <% end %> <% else %> <%= @destinations.first %> <% end %>
+DESTINATIONS = <%= @destinations.to_a %>
 MAX_DATAPOINTS_PER_MESSAGE = <%= @max_datapoints_per_message %>
 MAX_QUEUE_SIZE = <%= @max_queue_size %>
 USE_FLOW_CONTROL = <%= @use_flow_control %>

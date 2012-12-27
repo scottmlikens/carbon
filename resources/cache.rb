@@ -5,7 +5,7 @@ attribute :cookbook, :kind_of => String, :default => "carbon"
 attribute :python_interpreter, :kind_of => String, :default => "python2.7"
 attribute :carbon_template_source, :kind_of => String, :default => "carbon.conf.erb"
 attribute :storage_template_source, :kind_of => String, :default => "storage-schemas.conf.erb"
-attribute :cpu_affinity, :kind_of => String
+attribute :cpu_affinity
 attribute :options, :kind_of => Hash
 attribute :user, :kind_of => String, :default => "graphite"
 attribute :group, :kind_of => String, :default => "graphite"

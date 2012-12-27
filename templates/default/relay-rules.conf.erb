@@ -3,6 +3,6 @@
 <% unless v["default"] == "false" %>
 default = <%= v["default"] %>
 <% end %>
-destinations =<% if v["destinations"].compact.size > 1 %> <% v["destinations"].each do |d| %> <%= d %>, <% end %> <% else %> <%= v["destinations"].first %> <% end %>
+destinations = <%= v["destinations"].to_a %>
 continue = <%= v["continue"] %>
 <% end %>
