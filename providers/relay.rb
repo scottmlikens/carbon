@@ -1,4 +1,4 @@
-action :config do
+action :create do
   directory new_resource.graphite_home + "/conf" do
     action :create
     owner new_resource.user
@@ -62,6 +62,7 @@ action :config do
     log "not implemented"
     fatal
   end
+  node.set[new_resource.name]=new_resource
   new_resource.updated_by_last_action(true)
 end
 action :start do
