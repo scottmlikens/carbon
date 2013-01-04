@@ -104,7 +104,7 @@ action :create do
     log "not implemented"
     fatal
   end
-  node.set[new_resource.name]=new_resource
+  node.set["#{new_resource.name}"]=new_resource.to_hash
   new_resource.updated_by_last_action(true)
 end
 action :start do
