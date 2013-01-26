@@ -26,6 +26,7 @@ action :install do
     python_pip pkg do
       version ver
       virtualenv new_resource.graphite_home
+      user new_resource.user
       action :install
     end
   end
@@ -80,10 +81,10 @@ action :create do
                 :schema => new_resource.storage_schema
               })
   end
-  # This is due to storage/log being created by root and not knowing how/why.
-  execute "chown -R #{new_resource.user}:#{new_resource.group} #{new_resource.graphite_home}" do
-    action :run
-  end
+  node.set["#{new_resource.name}"]=new_resource.to_hash
+  new_resource.updated_by_last_action(true)
+end
+action :start do
   case new_resource.init_style
   when "upstart"
     template "/etc/init/carbon-cache-" + new_resource.carbon_instance + ".conf" do
@@ -100,20 +101,20 @@ action :create do
                   :cpu_affinity => new_resource.cpu_affinity
                 })
     end
-  else
-    log "not implemented"
-    fatal
-  end
-  node.set["#{new_resource.name}"]=new_resource.to_hash
-  new_resource.updated_by_last_action(true)
-end
-action :start do
-  case new_resource.init_style
-  when "upstart"
     service "carbon-cache-" + new_resource.carbon_instance do
       provider Chef::Provider::Service::Upstart
       action [:enable,:start]
     end
+  when "runit"
+  runit_service "carbon-cache-" + new_resource.carbon_instance do
+      options({
+                  :carbon_instance => new_resource.carbon_instance,
+                  :graphite_home => new_resource.graphite_home,
+                  :user => new_resource.user,
+                  :group => new_resource.group,
+                  :cpu_affinity => new_resource.cpu_affinity
+              })
+    end         
   end
   new_resource.updated_by_last_action(true)
 end
@@ -123,6 +124,10 @@ action :stop do
     service "carbon-cache-" + new_resource.carbon_instance do
       provider Chef::Provider::Service::Upstart
       action [:stop,:disable]
+    end
+  when "runit"
+    execute "sv stop carbon-cache-" + new_resource.carbon_instance do
+      action :run
     end
   else
     log "not supported"

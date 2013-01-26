@@ -39,12 +39,13 @@ action :create do
                 :relay_rules => new_resource.relay_rules
               })
   end
-  execute "chown -R #{new_resource.user}:#{new_resource.group} #{new_resource.graphite_home}" do
-    action :run
-  end
+  node.set["#{new_resource.name}"]=new_resource.to_hash
+  new_resource.updated_by_last_action(true)
+end
+action :start do
   case new_resource.init_style
   when "upstart"
-    template "/etc/init/carbon-relay-" + new_resource.relay_instance + ".conf" do
+  template "/etc/init/carbon-relay-" + new_resource.relay_instance + ".conf" do
       source new_resource.relay_init_template
       owner "root"
       group "root"
@@ -58,20 +59,20 @@ action :create do
                   :cpu_affinity => new_resource.cpu_affinity
                 })
     end
-  else
-    log "not implemented"
-    fatal
-  end
-  node.set["#{new_resource.name}"]=new_resource.to_hash
-  new_resource.updated_by_last_action(true)
-end
-action :start do
-  case new_resource.init_style
-  when "upstart"
     service "carbon-relay-" + new_resource.relay_instance do
       provider Chef::Provider::Service::Upstart
       action [:enable,:start]
     end
+    when "runit"
+    runit_service "carbon-relay-" + new_resource.relay_instance do
+      options({
+                :relay_instance => new_resource.relay_instance,
+                :graphite_home => new_resource.graphite_home,
+                :user => new_resource.user,
+                :group => new_resource.group,
+                :cpu_affinity => new_resource.cpu_affinity
+              })
+      end
   else
     log "not implemented"
     fatal
@@ -84,6 +85,10 @@ action :stop do
     service "carbon-relay-" + new_resource.relay_instance do
       provider Chef::Provider::Service::Upstart
       action [:stop,:disable]
+    end
+  when "runit"
+    execute "sv stop carbon-relay-" + new_resource.relay_instance do
+      action :run
     end
   else
     log "not implemented"

@@ -34,5 +34,5 @@ attribute :init_style, :kind_of => String, :default => "upstart"
 def initialize(*args)
   super
   @action = :install
-  @run_context.include_recipe ["build-essential","python","python::pip","python::virtualenv"]
+  @run_context.include_recipe ["build-essential","python","python::pip","python::virtualenv","runit::default"]
 end
