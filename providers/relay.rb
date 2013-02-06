@@ -64,7 +64,8 @@ action :start do
       action [:enable,:start]
     end
     when "runit"
-    runit_service "carbon-relay-" + new_resource.relay_instance do
+    runit_service "carbon-relay" do
+      service_name "carbon-relay-" + new_resource.relay_instance
       options({
                 :relay_instance => new_resource.relay_instance,
                 :graphite_home => new_resource.graphite_home,

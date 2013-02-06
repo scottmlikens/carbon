@@ -72,7 +72,8 @@ action :start do
       action [:enable,:start]
     end
   when "runit"
-  runit_service "carbon-cache-" + new_resource.carbon_instance do
+  runit_service "carbon-cache" do
+      service_name "carbon-cache-" + new_resource.carbon_instance
       options({
                   :carbon_instance => new_resource.carbon_instance,
                   :graphite_home => new_resource.graphite_home,
