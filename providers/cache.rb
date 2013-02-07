@@ -47,7 +47,17 @@ action :create do
                 :schema => new_resource.storage_schema
               })
   end
-  node.set["#{new_resource.name}"]=new_resource.to_hash
+  template new_resource.graphite_home + "/conf/storage-aggregation.conf" do
+    cookbook "carbon"
+    source "storage-aggregation.conf.erb"
+    owner new_resource.user
+    group new_resource.group
+    mode 0655
+    variables({
+                :storage_aggregation => new_resource.storage_aggregation
+              })
+  end
+  node.set[new_resource.name]=new_resource.to_hash
   new_resource.updated_by_last_action(true)
 end
 action :start do

@@ -39,7 +39,7 @@ action :create do
                 :relay_rules => new_resource.relay_rules
               })
   end
-  node.set["#{new_resource.name}"]=new_resource.to_hash
+  node.set[new_resource.name]=new_resource.to_hash
   new_resource.updated_by_last_action(true)
 end
 action :start do

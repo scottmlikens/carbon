@@ -1,0 +1,6 @@
+<% @storage_aggregation.each do |(name, options)| %>
+[<%= name.to_s %>]
+pattern = <%= options[:pattern] %>
+xFilesFactor = <%= options[:xfilesfactor] %>
+aggregationMethod = <%= options[:aggregationmethod] %>
+<% end %>

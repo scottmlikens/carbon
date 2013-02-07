@@ -75,7 +75,7 @@ action :git do
       code <<-EOH
       python setup.py install
       EOH
-      notifies :touch, resources(:file => "/opt/graphite/.#{pkg}"),:immediate
+      notifies :touch, "file[/opt/graphite/." + pkg + "]",:immediately
       not_if { ::File.exists?("/opt/graphite/.#{pkg}") }
     end
   end
