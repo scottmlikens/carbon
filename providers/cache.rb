@@ -83,6 +83,7 @@ action :start do
     end
   when "runit"
   runit_service "carbon-cache" do
+      cookbook new_resource.cookbook
       service_name "carbon-cache-" + new_resource.carbon_instance
       options({
                   :carbon_instance => new_resource.carbon_instance,

@@ -65,6 +65,7 @@ action :start do
     end
     when "runit"
     runit_service "carbon-relay" do
+      cookbook new_resource.cookbook
       service_name "carbon-relay-" + new_resource.relay_instance
       options({
                 :relay_instance => new_resource.relay_instance,
