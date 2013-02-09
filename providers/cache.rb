@@ -48,7 +48,7 @@ action :create do
               })
   end
   template new_resource.graphite_home + "/conf/storage-aggregation.conf" do
-    cookbook "carbon"
+    cookbook new_resource.cookbook
     source "storage-aggregation.conf.erb"
     owner new_resource.user
     group new_resource.group

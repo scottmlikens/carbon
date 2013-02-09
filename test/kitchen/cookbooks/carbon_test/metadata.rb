@@ -5,9 +5,7 @@ license          "Apache 2.0"
 description      "Installs/Configures carbon"
 long_description description
 version          "0.0.6"
-supports 'ubuntu', "= 12.04"
-depends 'runit', "= 1.0.2"
-depends 'build-essential'
-depends 'python'
-depends 'git'
-
+supports 'ubuntu'
+%w{build-essential python runit git carbon}.each do |dp|
+  depends dp
+end

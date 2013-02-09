@@ -1,0 +1,11 @@
+platform :ubuntu do
+  version "12.04" do
+    box "ubuntu-12.04"
+    box_url "https://mopub-virtual-machines.s3.amazonaws.com/ubuntu-12.04.box"
+  end
+end
+
+cookbook "carbon" do
+  configuration 'standalone'
+  configuration 'standaloneplusrelay'
+end

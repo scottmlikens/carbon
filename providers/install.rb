@@ -16,7 +16,7 @@ action :install do
     action :create
   end
   python_virtualenv new_resource.graphite_home do
-    interpreter new_resource.python_interpreter
+#    interpreter new_resource.python_interpreter
     owner new_resource.user
     group new_resource.group
     action :create
@@ -50,7 +50,7 @@ action :git do
     action :create
   end
   python_virtualenv new_resource.graphite_home do
-    interpreter new_resource.python_interpreter
+#    interpreter new_resource.python_interpreter
     owner new_resource.user
     group new_resource.group
     action :create

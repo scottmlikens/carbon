@@ -1,0 +1,6 @@
+site "http://community.opscode.com/api/v1"
+
+cookbook 'runit', :path => 'vendor/cookbooks/runit'
+cookbook "python"
+cookbook "build-essential"
+cookbook "git"
