@@ -8,4 +8,8 @@ end
 cookbook "carbon" do
   configuration 'standalone'
   configuration 'standaloneplusrelay'
+  configuration 'twoplusrelay'
+  configuration 'standalone_upstart'
+  configuration 'standaloneplusrelay_upstart'
+  configuration 'twoplusrelay_upstart'
 end

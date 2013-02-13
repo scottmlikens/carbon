@@ -3,7 +3,11 @@
 start on stopped rc RUNLEVEL=[2345]
 stop on runlevel [!2345]
 
-env VIRTUAL_ENV="<%= @graphite_home %>"
+VIRTUAL_ENV="<%= @graphite_home %>"
+export VIRTUAL_ENV
+_OLD_VIRTUAL_PATH="$PATH"
+PATH="$VIRTUAL_ENV/bin:$PATH"
+export PATH
 
 umask 022
 expect daemon

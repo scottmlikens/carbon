@@ -82,9 +82,9 @@ action :start do
       action [:enable,:start]
     end
   when "runit"
-  runit_service "carbon-cache" do
+  runit_service "carbon-cache-" + new_resource.carbon_instance do
       cookbook new_resource.cookbook
-      service_name "carbon-cache-" + new_resource.carbon_instance
+      run_template_name "carbon-cache" 
       options({
                   :carbon_instance => new_resource.carbon_instance,
                   :graphite_home => new_resource.graphite_home,
@@ -104,8 +104,9 @@ action :stop do
       action [:stop,:disable]
     end
   when "runit"
-    execute "sv stop carbon-cache-" + new_resource.carbon_instance do
-      action :run
+    runit_service "stop carbon-cache-" + new_resource.carbon_instance do
+      service_name "carbon-cache-" + new_resource.carbon_instance
+      action :stop
     end
   else
     log "not supported"

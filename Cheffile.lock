@@ -17,15 +17,17 @@ SITE
       chef_handler (>= 0.0.0)
     yum (2.1.0)
 
-PATH
-  remote: vendor/cookbooks/runit
+GIT
+  remote: https://github.com/opscode-cookbooks/runit
+  ref: master
+  sha: 7d6af4fbf1657eb3ff80c1d7a709f058ea3fdb82
   specs:
-    runit (1.0.2)
+    runit (1.0.3)
       build-essential (>= 0.0.0)
 
 DEPENDENCIES
   build-essential (>= 0)
   git (>= 0)
-  python (>= 0)
+  python (= 1.2.2)
   runit (>= 0)
 

@@ -64,9 +64,9 @@ action :start do
       action [:enable,:start]
     end
     when "runit"
-    runit_service "carbon-relay" do
+    runit_service "carbon-relay-" + new_resource.relay_instance  do
       cookbook new_resource.cookbook
-      service_name "carbon-relay-" + new_resource.relay_instance
+      run_template_name "carbon-relay"
       options({
                 :relay_instance => new_resource.relay_instance,
                 :graphite_home => new_resource.graphite_home,
@@ -89,8 +89,9 @@ action :stop do
       action [:stop,:disable]
     end
   when "runit"
-    execute "sv stop carbon-relay-" + new_resource.relay_instance do
-      action :run
+    runit_service "stop carbon-relay-" + new_resource.relay_instance do
+      service_name "carbon-relay-" + new_resource.relay_instance
+      action :stop
     end
   else
     log "not implemented"
