@@ -67,6 +67,7 @@ action :start do
     runit_service "carbon-relay-" + new_resource.relay_instance  do
       cookbook new_resource.cookbook
       run_template_name "carbon-relay"
+      default_logger true
       options({
                 :relay_instance => new_resource.relay_instance,
                 :graphite_home => new_resource.graphite_home,

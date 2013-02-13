@@ -84,7 +84,8 @@ action :start do
   when "runit"
   runit_service "carbon-cache-" + new_resource.carbon_instance do
       cookbook new_resource.cookbook
-      run_template_name "carbon-cache" 
+      run_template_name "carbon-cache"
+      default_logger true
       options({
                   :carbon_instance => new_resource.carbon_instance,
                   :graphite_home => new_resource.graphite_home,

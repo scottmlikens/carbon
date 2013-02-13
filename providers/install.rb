@@ -30,6 +30,12 @@ action :install do
       action :install
     end
   end
+  python_pip "Twisted" do
+    version "11.1.0"
+    action :install
+    user new_resource.user
+    virtualenv new_resource.graphite_home
+  end
   new_resource.updated_by_last_action(true)
 end
 action :git do
@@ -78,6 +84,12 @@ action :git do
       notifies :touch, "file[/opt/graphite/." + pkg + "]",:immediately
       not_if { ::File.exists?("/opt/graphite/.#{pkg}") }
     end
+  end
+  python_pip "Twisted" do
+    version "11.1.0"
+    action :install
+    user new_resource.user
+    virtualenv new_resource.graphite_home
   end
   new_resource.updated_by_last_action(true)
 end

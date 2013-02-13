@@ -6,6 +6,8 @@ description      "Installs/Configures carbon"
 long_description description
 version          "0.0.6"
 supports 'ubuntu'
-%w{build-essential python runit git carbon}.each do |dp|
-  depends dp
-end
+depends "runit", "1.0.3"
+depends "build-essential"
+depends "python"
+depends "git"
+depends "carbon"

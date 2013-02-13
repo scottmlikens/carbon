@@ -6,7 +6,7 @@ description      "Installs/Configures carbon"
 long_description description
 version          "0.0.6"
 supports 'ubuntu', "= 12.04"
-depends 'runit', "= 1.0.2"
+depends 'runit', "= 1.0.3"
 depends 'build-essential'
 depends 'python'
 depends 'git'
