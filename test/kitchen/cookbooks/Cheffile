@@ -1,0 +1,6 @@
+site "http://community.opscode.com/api/v1"
+
+cookbook 'runit', :git => 'https://github.com/opscode-cookbooks/runit'
+cookbook "python", '1.2.2'
+cookbook "build-essential"
+cookbook "git"
