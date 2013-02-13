@@ -30,7 +30,7 @@ attribute :carbon_packages, :kind_of => Hash, :default => { "whisper" => "0.9.10
 attribute :carbon_instance, :kind_of => String, :default => "a"
 attribute :storage_schema, :kind_of => Hash, :default => { :all => { :pattern => "(.*)", :retentions => "10s:90d, 60s:1y" } }
 attribute :local_data_dir, :kind_of => String, :default => "/opt/graphite/storage/whisper"
-attribute :init_style, :kind_of => String, :default => "upstart"
+attribute :init_style, :kind_of => String, :default => "runit"
 
 def initialize(*args)
   super

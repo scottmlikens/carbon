@@ -9,8 +9,8 @@ This cookbook provides two resources and providers to install and configure [Gra
 Requirements
 ============
 
-1. [Upstart](http://upstart.ubuntu.com/)
-  Pull requests accepted to support other init styles
+1. [Ubuntu](https://ubuntu.com/)
+	12.04 Has been tested, other versions may work.
 2. [Python](http://github.com/opscode-cookbooks/python/)
   Provides virtualenv support and the pip provider
 3. [graphite](http://github.com/damm/graphite/)
@@ -29,15 +29,32 @@ Resources and Providers
 
 This cookbook provides two resource and corresponding providers.
 
-`cache.rb`
+`install.rb`
 -------------
 
-Installs and Configures [Carbon Cache](https://github.com/graphite-project/carbon) from [Pypi](http://pypi.python.org/pypi/carbon)
+Installs [Carbon Cache](https://github.com/graphite-project/carbon) from either [Pypi](http://pypi.python.org/pypi/carbon) or [Github](https://github.com/graphite-project/carbon)
 
 Actions:
 
-* `install` - installs carbon-cache
-* `config` - configures carbon-cache
+* `install` - installs carbon-cache from Pypi
+* `git` - installs carbon-cache via *git*
+
+Attribute Parameters:
+
+* `carbon_stable_base_git_uri` - String - default - `https://github.com/graphite-project/`
+* `carbon_stable_packages` - Hash - default - `{ "whisper" => "0.9.x", "carbon" => "0.9.x" }`
+* `graphite_home` - String - default - `/opt/graphite`
+* `user` - String - default - `graphite`
+* `carbon_packages` - Hash - `{ "whisper" => "0.9.10", "carbon" => "0.9.10" }`
+
+`cache.rb`
+-------------
+
+Installs and Configures [Carbon Cache](https://github.com/graphite-project/carbon) from
+
+Actions:
+
+* `create` - configures carbon-cache
 * `start` - starts carbon-cache
 * `stop` - stops carbon-cache
 
@@ -70,8 +87,9 @@ Attribute Parameters:
 * `carbon_packages` - Hash -  default - `{ "whisper" => "0.9.10", "carbon" => "0.9.10" }`
 * `carbon_instance` - String -  default - `a`
 * `storage_schema` - Hash - default - `{ :all => { :pattern => "(.*)", :retentions => "10s:90d, 60s:1y" } }`
+* `storage_aggregation` - Hash - default - `{ }`
 * `local_data_dir` - String - default - `/opt/graphite/storage/whisper`
-* `init_style` - String - default - `upstart`
+* `init_style` - String - default - `runit`
 
 `relay.rb`
 -------------
@@ -81,7 +99,7 @@ Configures [Carbon Relay](https://github.com/graphite-project/carbon)
 
 Actions:
 
-* `config` - configures carbon-relay
+* `create` - configures carbon-relay
 * `start` - starts carbon-relay
 * `stop` - stops carbon-relay
 * `disable` - disables carbon-relay
@@ -106,7 +124,7 @@ Attribute Parameters:
 * `python_interpreter` -  String - default - `python2.7`
 * `relay_template_source` -  String - default - `carbon-relay.conf.erb`
 * `relay_init_template` -  String - default - `carbon-relay.init.erb`
-* `init_style` -  String' - default - `upstart` 
+* `init_style` -  String' - default - `runit` 
 * `cpu_affinity` -  String - Specifies which cpu to bind the carbon-relay process to
 * `relay_rules_template_source` -  String - default - `relay-rules.conf.erb`
 
@@ -130,6 +148,7 @@ This is the most basic example you are not limited by this example.
       action [:config,:start]    
     end
 
+* For better examples please review our [Tests](https://github.com/damm/carbon/tree/development/test/kitchen/cookbooks/carbon_test/recipes)
 
 License and Author
 ==================

@@ -18,7 +18,7 @@ attribute :group, :kind_of => String, :default => "graphite"
 attribute :python_interpreter, :kind_of => String, :default => "python2.7"
 attribute :relay_template_source, :kind_of => String, :default => "carbon-relay.conf.erb"
 attribute :relay_init_template, :kind_of => String, :default => "carbon-relay.init.erb"
-attribute :init_style, :kind_of => String, :default => "upstart"
+attribute :init_style, :kind_of => String, :default => "runit"
 attribute :cpu_affinity
 attribute :relay_rules_template_source, :kind_of => String, :default => "relay-rules.conf.erb"
 

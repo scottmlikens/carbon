@@ -9,7 +9,8 @@ cookbook "carbon" do
   configuration 'standalone'
   configuration 'standaloneplusrelay'
   configuration 'twoplusrelay'
-  configuration 'standalone_upstart'
-  configuration 'standaloneplusrelay_upstart'
-  configuration 'twoplusrelay_upstart'
+#TODO: Fix upstart so it works again
+#  configuration 'standalone_upstart'
+#  configuration 'standaloneplusrelay_upstart'
+#  configuration 'twoplusrelay_upstart'
 end
