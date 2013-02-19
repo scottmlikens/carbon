@@ -4,6 +4,7 @@ VIRTUAL_ENV="<%= @options[:graphite_home] %>"
 export VIRTUAL_ENV
 _OLD_VIRTUAL_PATH="$PATH"
 PATH="$VIRTUAL_ENV/bin:$PATH"
+export GRAPHITE_ROOT="<%= @options[:graphite_home] %>"
 export PATH
-cd <%= @options[:graphite_home] %>
-exec chpst -u <%= @options[:user] %> -l <%= @options[:graphite_home] %>/storage/carbon-relay-<%= @options[:relay_instance] %>.lock -- <% if @options[:cpu_affinity] %>taskset -c <%= @options[:cpu_affinity] %><% end %> <%= @options[:graphite_home] %>/bin/carbon-relay.py --instance=<%= @options[:relay_instance] %> --config <%= @options[:graphite_home] %>/conf/carbon-relay-<%= @options[:relay_instance] %>.conf start
+cd <%= @options[:graphite_home] %>/lib
+exec chpst -u <%= @options[:user] %> -l <%= @options[:graphite_home] %>/storage/carbon-relay-<%= @options[:relay_instance] %>.lock -- <% if @options[:cpu_affinity] %>taskset -c <%= @options[:cpu_affinity] %><% end %> twistd --nodaemon --umask=0022 carbon-relay --instance=<%= @options[:relay_instance] %> --config <%= @options[:graphite_home] %>/conf/carbon-relay-<%= @options[:relay_instance] %>.conf start
