@@ -68,8 +68,14 @@ action :git do
       reference ver
       action :checkout
     end
-    file "/opt/graphite/.#{pkg}" do
+    file new_resource.graphite_home + "." + pkg do
       action :nothing
+    end
+    directory new_resource.graphite_home + "/storage" do
+      owner new_resource.user
+      group new_resource.group
+      mode 0755
+      action :create_if_missing
     end
     script "install #{pkg} in virtualenv #{new_resource.graphite_home}" do
       user new_resource.user
@@ -80,8 +86,8 @@ action :git do
       code <<-EOH
       python setup.py install
       EOH
-      notifies :touch, "file[/opt/graphite/." + pkg + "]",:immediately
-      not_if { ::File.exists?("/opt/graphite/.#{pkg}") }
+      notifies :touch, "file[" + new_resource.graphite_home + "/." + pkg + "]",:immediately
+      not_if { ::File.exists?(new_resource.graphite_home + "/." + pkg) }
     end
   end
   python_pip "Twisted" do
