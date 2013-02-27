@@ -1,14 +1,11 @@
 action :create do
-  directory new_resource.graphite_home + "/conf" do
-    owner new_resource.user
-    group new_resource.group
-    action :create
-  end
-  directory new_resource.graphite_home + "/storage/log" do
-    action :create
-    owner new_resource.user
-    group new_resource.group
-    recursive true
+  %w{conf storage storage/log}.each do |ab|
+    directory new_resource.graphite_home + "/" + ab do
+      owner new_resource.user
+      group new_resource.group
+      action :create
+      recursive true
+    end
   end
   template new_resource.graphite_home + "/conf/carbon-cache-" + new_resource.carbon_instance + ".conf" do
     source new_resource.carbon_template_source
