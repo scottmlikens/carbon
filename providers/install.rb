@@ -65,12 +65,8 @@ action :git do
     owner new_resource.user
     group new_resource.group
     mode 0755
-    action :create_if_missing
+    action :create
     recursive true
-  end
-  execute "ensure /opt/graphite/storage is owned by root" do
-    command "chown graphite:graphite /opt/graphite/storage"
-    only_if { ::File.stat(new_resource.graphite_home + "/storage") == 0 }
   end
   carbon_stable_pkgs = new_resource.carbon_stable_packages.collect do |pkg,ver|
     git "/var/tmp/#{pkg}" do
@@ -80,7 +76,7 @@ action :git do
       action :checkout
       not_if { ::File.exists?(new_resource.graphite_home + "." + pkg) }
     end
-    file new_resource.graphite_home + "." + pkg do
+    file new_resource.graphite_home + "/." + pkg do
       action :nothing
     end
     script "install #{pkg} in virtualenv #{new_resource.graphite_home}" do
