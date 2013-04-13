@@ -4,16 +4,17 @@ pickle_receiver_port = 2200
 dst = []
 cpq = []
 dstplus = []
-
+starting_cpu = 1
 carbon_install "stable" do
   action :git
 end
 
 ("a".."b").each do |ci|
   carbon_cache "carbon-cache-" + ci do
-    action [:create,:start]
+    action :create
     carbon_instance ci
-    init_style "upstart"
+    cpu_affinity starting_cpu
+    init_style "runit"
     line_listner({"line_receiver_interface" => "0.0.0.0", "line_receiver_port" => line_receiver_port })
     pickle_listner({"pickle_receiver_interface" => "0.0.0.0", "pickle_receiver_port" => pickle_receiver_port })
     udp_listner({"enable_udp_listner" => "False", "udp_receiver_interface" => "0.0.0.0", "udp_receiver_port" => line_receiver_port })
@@ -22,17 +23,19 @@ end
     cache_query_port+= 1
     line_receiver_port+= 1
     pickle_receiver_port+= 1
+    starting_cpu+= 1
     dstplus << "127.0.0.1:#{pickle_receiver_port}:#{ci}"
   end
 end
 
 
 carbon_relay "relay" do
-  action [:create,:start]
+  action :create
   relay_rules({ "default" => { "default" => "true", "destinations" => dstplus, "continue" => String.new, "pattern" => String.new } })
   line_listner({"line_receiver_interface" => "0.0.0.0", "line_receiver_port" => 2003 })
   pickle_listner({"pickle_receiver_interface" => "0.0.0.0", "pickle_receiver_port" => 2004 })
   destinations dstplus
   relay_instance "a"
-  init_style "upstart"
+  cpu_affinity "0"
+  init_style "runit"
 end

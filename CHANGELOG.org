@@ -6,7 +6,13 @@
 This file is used to list changes made in each version of carbon.
 
 ## 0.1.0:
-
-* Work in Progress version of carbon
   + Added support for upstart
   + Basic provider of carbon_relay and carbon_cache works
+## 0.2.0:
+  + Runit support
+  + Add test support (test-kitchen 0.7)
+## 0.3.0:
+  - remove upstart support
+  + upgrade test support (test-kitchen 1.0)
+  + notifications work
+  

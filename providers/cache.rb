@@ -1,3 +1,5 @@
+use_inline_resources
+
 action :create do
   %w{conf storage storage/log}.each do |ab|
     directory new_resource.graphite_home + "/" + ab do
@@ -33,6 +35,7 @@ action :create do
               :bind_patterns => new_resource.bind_patterns,
               :local_data_dir => new_resource.local_data_dir
               )
+    notifies :restart, "runit_service[carbon-cache-" + new_resource.carbon_instance + "]",:delayed
   end
   template new_resource.graphite_home + "/conf/storage-schemas.conf" do
     cookbook new_resource.cookbook
@@ -43,6 +46,7 @@ action :create do
     variables({
                 :schema => new_resource.storage_schema
               })
+    notifies :restart, "runit_service[carbon-cache-" + new_resource.carbon_instance + "]",:delayed
   end
   template new_resource.graphite_home + "/conf/storage-aggregation.conf" do
     cookbook new_resource.cookbook
@@ -53,62 +57,19 @@ action :create do
     variables({
                 :storage_aggregation => new_resource.storage_aggregation
               })
+    notifies :restart, "runit_service[carbon-cache-" + new_resource.carbon_instance + "]",:delayed
   end
-  node.set[new_resource.name]=new_resource.to_hash
-  new_resource.updated_by_last_action(true)
-end
-action :start do
-  case new_resource.init_style
-  when "upstart"
-    template "/etc/init/carbon-cache-" + new_resource.carbon_instance + ".conf" do
-      cookbook new_resource.cookbook
-      source "carbon.init.erb"
-      owner "root"
-      group "root"
-      mode 0644
-      variables({
-                  :carbon_instance => new_resource.carbon_instance,
-                  :graphite_home => new_resource.graphite_home,
-                  :user => new_resource.user,
-                  :group => new_resource.group,
-                  :cpu_affinity => new_resource.cpu_affinity
-                })
-    end
-    service "carbon-cache-" + new_resource.carbon_instance do
-      provider Chef::Provider::Service::Upstart
-      action [:enable,:start]
-    end
-  when "runit"
   runit_service "carbon-cache-" + new_resource.carbon_instance do
-      cookbook new_resource.cookbook
-      run_template_name "carbon-cache"
-      default_logger true
-      options({
-                  :carbon_instance => new_resource.carbon_instance,
-                  :graphite_home => new_resource.graphite_home,
-                  :user => new_resource.user,
-                  :group => new_resource.group,
-                  :cpu_affinity => new_resource.cpu_affinity
+    cookbook new_resource.cookbook
+    run_template_name "carbon-cache"
+    default_logger true
+    options({
+                :carbon_instance => new_resource.carbon_instance,
+                :graphite_home => new_resource.graphite_home,
+                :user => new_resource.user,
+                :group => new_resource.group,
+                :cpu_affinity => new_resource.cpu_affinity
               })
-    end         
-  end
-  new_resource.updated_by_last_action(true)
-end
-action :stop do
-  case new_resource.init_style
-  when "upstart"
-    service "carbon-cache-" + new_resource.carbon_instance do
-      provider Chef::Provider::Service::Upstart
-      action [:stop,:disable]
-    end
-  when "runit"
-    runit_service "stop carbon-cache-" + new_resource.carbon_instance do
-      service_name "carbon-cache-" + new_resource.carbon_instance
-      action :stop
-    end
-  else
-    log "not supported"
-    fatal
-  end
-  new_resource.updated_by_last_action(true)
+  end         
+  node.set[new_resource.name]=new_resource.to_hash
 end

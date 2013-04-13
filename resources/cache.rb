@@ -1,4 +1,4 @@
-actions :create, :start, :stop
+actions :create
 
 # No Dependency checking here, this obviously will not be true on distros that do not run 2.7
 attribute :cookbook, :kind_of => String, :default => "carbon"

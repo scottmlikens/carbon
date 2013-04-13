@@ -1,3 +1,5 @@
+use_inline_resources
+
 action :install do
   group new_resource.group do
     action :create
@@ -36,7 +38,6 @@ action :install do
     user new_resource.user
     virtualenv new_resource.graphite_home
   end
-  new_resource.updated_by_last_action(true)
 end
 action :git do
   group new_resource.group do
@@ -98,5 +99,4 @@ action :git do
     user new_resource.user
     virtualenv new_resource.graphite_home
   end
-  new_resource.updated_by_last_action(true)
 end

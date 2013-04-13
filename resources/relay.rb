@@ -1,4 +1,4 @@
-actions :create, :start, :stop, :disable
+actions :create
 
 attribute :cookbook, :kind_of => String, :default => "carbon"
 attribute :options, :kind_of => Hash

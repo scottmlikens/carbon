@@ -1,0 +1,24 @@
+---
+driver_plugin: vagrant
+platforms: 
+- name: ubuntu-12.04
+  driver_config:
+    box: ubuntu-12.04
+    box_url: https://mopub-virtual-machines.s3.amazonaws.com/ubuntu-12.04.box
+    require_chef_omnibus: 11.4.0
+  run_list:
+  - recipe[apt]
+suites:
+- name: standalone_runit
+  run_list: 
+  - recipe[carbon::test_standalone_runit]
+  attributes: {}
+- name: twoplusrelay_runit
+  run_list: 
+  - recipe[carbon::test_twoplusrelay_runit]
+  attributes: {}
+- name: standaloneplusrelay_runit
+  run_list: 
+  - recipe[carbon::test_standaloneplusrelay_runit]
+  attributes: {}
+
