@@ -128,3 +128,41 @@ I, [2013-05-11T01:08:59.794913 #31911]  INFO -- Kitchen: -----> Setting up <stan
 I, [2013-05-11T01:09:05.460171 #31911]  INFO -- Kitchen: -----> Verifying <standaloneplusrelay-runit-precise>
 I, [2013-05-11T01:09:07.236077 #31911]  INFO -- Kitchen: -----> Destroying <standaloneplusrelay-runit-precise>
 I, [2013-05-11T01:09:09.033965 #31911]  INFO -- Kitchen: -----> Kitchen is finished. (5m26.55s)
+I, [2013-06-05T00:55:51.744888 #12400]  INFO -- Kitchen: -----> Starting Kitchen (v1.0.0.dev)
+I, [2013-06-05T00:55:51.751669 #12400]  INFO -- Kitchen: -----> Cleaning up any prior instances of <standalone-runit-precise>
+I, [2013-06-05T00:55:51.751814 #12400]  INFO -- Kitchen: -----> Destroying <standalone-runit-precise>
+I, [2013-06-05T00:55:51.752860 #12400]  INFO -- Kitchen: -----> Testing <standalone-runit-precise>
+I, [2013-06-05T00:55:51.752947 #12400]  INFO -- Kitchen: -----> Creating <standalone-runit-precise>
+I, [2013-06-05T00:56:08.177436 #12400]  INFO -- Kitchen: -----> Converging <standalone-runit-precise>
+E, [2013-06-05T00:56:38.926030 #12400] ERROR -- Kitchen: Converge failed on instance <standalone-runit-precise>.
+I, [2013-06-05T00:59:26.153072 #13743]  INFO -- Kitchen: -----> Starting Kitchen (v1.0.0.dev)
+I, [2013-06-05T00:59:26.160078 #13743]  INFO -- Kitchen: -----> Destroying <standalone-runit-precise>
+I, [2013-06-05T00:59:27.725479 #13743]  INFO -- Kitchen: -----> Destroying <twoplusrelay-runit-precise>
+I, [2013-06-05T00:59:27.725852 #13743]  INFO -- Kitchen: -----> Destroying <standaloneplusrelay-runit-precise>
+I, [2013-06-05T00:59:27.726178 #13743]  INFO -- Kitchen: -----> Kitchen is finished. (0m1.57s)
+I, [2013-06-05T01:00:57.346806 #14605]  INFO -- Kitchen: -----> Starting Kitchen (v1.0.0.dev)
+I, [2013-06-05T01:00:57.354079 #14605]  INFO -- Kitchen: -----> Cleaning up any prior instances of <standalone-runit-precise>
+I, [2013-06-05T01:00:57.354241 #14605]  INFO -- Kitchen: -----> Destroying <standalone-runit-precise>
+I, [2013-06-05T01:00:57.355295 #14605]  INFO -- Kitchen: -----> Testing <standalone-runit-precise>
+I, [2013-06-05T01:00:57.355381 #14605]  INFO -- Kitchen: -----> Creating <standalone-runit-precise>
+I, [2013-06-05T01:00:59.169225 #14605]  INFO -- Kitchen: -----> Converging <standalone-runit-precise>
+I, [2013-06-05T01:02:18.338823 #14605]  INFO -- Kitchen: -----> Setting up <standalone-runit-precise>
+I, [2013-06-05T01:02:24.621221 #14605]  INFO -- Kitchen: -----> Verifying <standalone-runit-precise>
+I, [2013-06-05T01:02:26.393850 #14605]  INFO -- Kitchen: -----> Destroying <standalone-runit-precise>
+I, [2013-06-05T01:02:27.700464 #14605]  INFO -- Kitchen: -----> Cleaning up any prior instances of <twoplusrelay-runit-precise>
+I, [2013-06-05T01:02:27.700585 #14605]  INFO -- Kitchen: -----> Destroying <twoplusrelay-runit-precise>
+I, [2013-06-05T01:02:27.700890 #14605]  INFO -- Kitchen: -----> Testing <twoplusrelay-runit-precise>
+I, [2013-06-05T01:02:27.700992 #14605]  INFO -- Kitchen: -----> Creating <twoplusrelay-runit-precise>
+I, [2013-06-05T01:02:32.505624 #14605]  INFO -- Kitchen: -----> Converging <twoplusrelay-runit-precise>
+I, [2013-06-05T01:04:08.316122 #14605]  INFO -- Kitchen: -----> Setting up <twoplusrelay-runit-precise>
+I, [2013-06-05T01:04:13.848263 #14605]  INFO -- Kitchen: -----> Verifying <twoplusrelay-runit-precise>
+I, [2013-06-05T01:04:15.678507 #14605]  INFO -- Kitchen: -----> Destroying <twoplusrelay-runit-precise>
+I, [2013-06-05T01:04:17.358421 #14605]  INFO -- Kitchen: -----> Cleaning up any prior instances of <standaloneplusrelay-runit-precise>
+I, [2013-06-05T01:04:17.358560 #14605]  INFO -- Kitchen: -----> Destroying <standaloneplusrelay-runit-precise>
+I, [2013-06-05T01:04:17.358992 #14605]  INFO -- Kitchen: -----> Testing <standaloneplusrelay-runit-precise>
+I, [2013-06-05T01:04:17.359071 #14605]  INFO -- Kitchen: -----> Creating <standaloneplusrelay-runit-precise>
+I, [2013-06-05T01:04:22.168255 #14605]  INFO -- Kitchen: -----> Converging <standaloneplusrelay-runit-precise>
+I, [2013-06-05T01:05:44.969500 #14605]  INFO -- Kitchen: -----> Setting up <standaloneplusrelay-runit-precise>
+I, [2013-06-05T01:05:50.231904 #14605]  INFO -- Kitchen: -----> Verifying <standaloneplusrelay-runit-precise>
+I, [2013-06-05T01:05:52.046491 #14605]  INFO -- Kitchen: -----> Destroying <standaloneplusrelay-runit-precise>
+I, [2013-06-05T01:05:53.819574 #14605]  INFO -- Kitchen: -----> Kitchen is finished. (4m56.47s)
