@@ -1,24 +1,57 @@
 ---
 driver_plugin: vagrant
-platforms: 
+driver_config:
+  require_chef_omnibus: true
+
+platforms:
+- name: ubuntu-12.10
+  driver_config:
+    box: opscode-ubuntu-12.10
+    box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_ubuntu-12.10_provisionerless.box
+  run_list: ["recipe[apt]"]
+
+- name: ubuntu-12.04
+  driver_config:
+    box: opscode-ubuntu-12.04
+    box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_provisionerless.box
+  run_list: ["recipe[apt]"]
+
+- name: ubuntu-10.04
+  driver_config:
+    box: opscode-ubuntu-10.04
+    box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_ubuntu-10.04_provisionerless.box
+  run_list: ["recipe[apt]"]
+
+- name: centos-5.9
+  driver_config:
+    box: opscode-centos-5.9
+    box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_centos-5.9_provisionerless.box
+
+- name: centos-6.4
+  driver_config:
+    box: opscode-centos-6.4
+    box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_centos-6.4_provisionerless.box
+
 - name: ubuntu-12.04
   driver_config:
     box: ubuntu-12.04
     box_url: https://mopub-virtual-machines.s3.amazonaws.com/ubuntu-12.04.box
-    require_chef_omnibus: 11.4.0
   run_list:
   - recipe[apt]
 suites:
-- name: standalone_runit
+- name: standalone
   run_list: 
-  - recipe[carbon::test_standalone_runit]
+  - recipe[minitest-handler]
+  - recipe[carbon_test::standalone]
   attributes: {}
-- name: twoplusrelay_runit
+- name: twoplusrelay
   run_list: 
-  - recipe[carbon::test_twoplusrelay_runit]
+  - recipe[minitest-handler]
+  - recipe[carbon_test::twoplusrelay]
   attributes: {}
-- name: standaloneplusrelay_runit
+- name: relayplus
   run_list: 
-  - recipe[carbon::test_standaloneplusrelay_runit]
+  - recipe[minitest-handler]
+  - recipe[carbon_test::relayplus]
   attributes: {}
 

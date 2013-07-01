@@ -10,4 +10,5 @@ group :integration do
   cookbook "apt"
   cookbook "yum"
   cookbook "minitest-handler"
+  cookbook "carbon_test", path: "test/cookbooks/carbon_test"
 end
