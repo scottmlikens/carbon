@@ -32,7 +32,9 @@ attribute :storage_schema, :kind_of => Hash, :default => { :all => { :pattern =>
 attribute :local_data_dir, :kind_of => String, :default => "/opt/graphite/storage/whisper"
 attribute :init_style, :kind_of => String, :default => "runit"
 attribute :log_cache_hits, :kind_of => String, :default => "False"
-
+attribute :fallocate_create, :kind_of => String, :default => "False"
+attribute :lock_writes, :kind_of => String, :default => "False"
+attribute :sparse_create, :kind_of => String, :default => "False"
 
 def initialize(*args)
   super

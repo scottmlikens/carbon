@@ -15,4 +15,9 @@ This file is used to list changes made in each version of carbon.
   - remove upstart support
   + upgrade test support (test-kitchen 1.0)
   + notifications work
-  
+## 0.3.1: 
+  - add support for Log_cache_hits
+## unreleased:
+  - improve test-kitchen support with minitests
+## 0.3.2:
+  - add support for fallocate and flock

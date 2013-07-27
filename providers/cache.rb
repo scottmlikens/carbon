@@ -34,7 +34,10 @@ action :create do
               :amqp => new_resource.amqp,
               :bind_patterns => new_resource.bind_patterns,
               :local_data_dir => new_resource.local_data_dir,
-              :log_cache_hits => new_resource.log_cache_hits
+              :log_cache_hits => new_resource.log_cache_hits,
+              :fallocate_create => new_resource.fallocate_create,
+              :lock_writes => new_resource.lock_writes,
+              :sparse_create => new_resource.sparse_create
               )
     notifies :restart, "runit_service[carbon-cache-" + new_resource.carbon_instance + "]",:delayed
   end

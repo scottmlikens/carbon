@@ -146,3 +146,13 @@ AMQP_VERBOSE = <%= @amqp_verbose %>
 #<% if @bind_patterns %>
 #BIND_PATTERNS = <%= @bind_patterns %>
 #<% end %>
+
+<% if @lock_writes == "True" %>
+WHISPER_LOCK_WRITES=<%= @lock_writes %>
+<% end %>
+<% if @sparse_create == "True" %>
+WHISPER_SPARSE_CREATE=<%= @sparse_create %>
+<% end %>
+<% if @fallocate_create == "True" %>
+WHISPER_FALLOCATE_CREATE=<%= @fallocate_create %>
+<% end %>
