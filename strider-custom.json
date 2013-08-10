@@ -1,0 +1,5 @@
+{
+  "prepare": "bundle install --path /tmp/mopub",
+  "test": "bundle exec kitchen test",
+  "deploy": "/bin/true"
+}
