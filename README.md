@@ -140,15 +140,18 @@ This is the most basic example you are not limited by this example.
 
 * The cookbook named ``graphite_infra`` must depend on the *carbon* cookbook.
 
-    carbon_cache "my_carbon" do
-      action [:install,:config,:start]  
-      cpu_affinity "1"  
-    end  
-    carbon_relay "sample" do  
-      action [:config,:start]    
-    end
-
-* For better examples please review our [Tests](https://github.com/damm/carbon/tree/development/test/kitchen/cookbooks/carbon_test/recipes)
+```ruby
+carbon_install "stable" do
+  action :git
+end
+carbon_cache "carbon-a" do
+action :create
+cpu_affinity 1
+init_style "runit"
+storage_aggregation({:min => { :pattern => "\.min$", :xfilesfactor => "0.1", :aggregationmethod => "min" }, :max => { :pattern => "\.max$", :xfilesfactor => "0.1", :aggregationmethod => "max" }, :sum => { :pattern => "\.count$", :xfilesfactor => "0", :aggregationmethod => "sum" }, :default_average => { :pattern => ".*", :xfilesfactor => "0.5", :aggregationmethod => "average"}})
+end
+```
+* For better examples please review our [Tests](https://github.com/damm/carbon/tree/master/test/cookbooks/carbon_test)
 
 License and Author
 ==================
