@@ -13,6 +13,7 @@ end
   carbon_cache "carbon-cache-" + ci do
     action :create
     carbon_instance ci
+    cpu_affinity starting_cpu
     init_style "runit"
     line_listner({"line_receiver_interface" => "0.0.0.0", "line_receiver_port" => line_receiver_port })
     pickle_listner({"pickle_receiver_interface" => "0.0.0.0", "pickle_receiver_port" => pickle_receiver_port })
@@ -35,5 +36,6 @@ carbon_relay "relay" do
   pickle_listner({"pickle_receiver_interface" => "0.0.0.0", "pickle_receiver_port" => 2004 })
   destinations dstplus
   relay_instance "a"
+  cpu_affinity "0"
   init_style "runit"
 end
